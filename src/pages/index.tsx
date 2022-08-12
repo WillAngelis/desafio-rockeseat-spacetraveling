@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { ReactElement, useState } from 'react';
 import { FiCalendar, FiUser } from 'react-icons/fi';
@@ -68,34 +69,39 @@ export default function Home({ postsPagination }: HomeProps): ReactElement {
   }
 
   return (
-    <main className={commonStyles.container}>
-      <Header />
-      <div className={styles.posts}>
-        {posts.map(post => (
-          <Link href={`/post/${post.uid}`} key={post.uid}>
-            <a className={styles.post}>
-              <strong>{post.data.title}</strong>
-              <p>{post.data.subtitle}</p>
-              <ul>
-                <li>
-                  <FiCalendar />
-                  {post.first_publication_date}
-                </li>
-                <li>
-                  <FiUser />
-                  {post.data.author}
-                </li>
-              </ul>
-            </a>
-          </Link>
-        ))}
-        {nextPage && (
-          <button type="button" onClick={handleNextPage}>
-            Carregar mais posts
-          </button>
-        )}
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Home | spacetraveling</title>
+      </Head>
+      <main className={commonStyles.container}>
+        <Header />
+        <div className={styles.posts}>
+          {posts.map(post => (
+            <Link href={`/post/${post.uid}`} key={post.uid}>
+              <a className={styles.post}>
+                <strong>{post.data.title}</strong>
+                <p>{post.data.subtitle}</p>
+                <ul>
+                  <li>
+                    <FiCalendar />
+                    {post.first_publication_date}
+                  </li>
+                  <li>
+                    <FiUser />
+                    {post.data.author}
+                  </li>
+                </ul>
+              </a>
+            </Link>
+          ))}
+          {nextPage && (
+            <button type="button" onClick={handleNextPage}>
+              Carregar mais posts
+            </button>
+          )}
+        </div>
+      </main>
+    </>
   );
 }
 
